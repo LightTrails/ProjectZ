@@ -48,14 +48,19 @@ public class Level : MonoBehaviour
         var maxY = (int)sLevel.Dimensions.y;
 
         // ((RectTransform)resultImage.transform).sizeDelta = Dimensions * (10 * distance) + new Vector2(10, 10);
-
+#if UNITY_ANDROID
+        var maxHeight = 550;
+        var minCellSize = 100;
+#else
         var maxHeight = 450;
+        var minCellSize = 80;
+#endif
 
         var totalCell = maxHeight / maxY;
 
-        if (totalCell > 80)
+        if (totalCell > minCellSize)
         {
-            totalCell = 80;
+            totalCell = minCellSize;
         }
 
         var spacing = totalCell * 0.1f;
@@ -70,7 +75,7 @@ public class Level : MonoBehaviour
 
         var exampleCell = resultImageSize / (float)(Math.Max(maxY, maxX));
 
-        var exampleSpace = exampleCell * 0.10f;
+        var exampleSpace = exampleCell * 0.20f;
         var exampleCellSize = exampleCell - exampleSpace;
 
         previewImage.cellSize = new Vector2(exampleCellSize, exampleCellSize);
